@@ -1,0 +1,38 @@
+# ==============================
+# SPRING BOOT (BACKEND)
+# ==============================
+
+Backend/**/target/
+Backend/**/*.log
+
+# IDE files
+Backend/**/.classpath
+Backend/**/.project
+Backend/**/.settings/
+Backend/**/.idea/
+Backend/**/*.iml
+
+# ==============================
+# REACT (FRONTEND)
+# ==============================
+
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+frontend/.env
+frontend/.env.*
+
+# ==============================
+# OS FILES
+# ==============================
+
+.DS_Store
+Thumbs.db
+
+# ==============================
+# GLOBAL IDE
+# ==============================
+
+.vscode/
+.idea/
+*.iml
