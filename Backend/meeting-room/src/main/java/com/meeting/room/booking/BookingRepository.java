@@ -1,6 +1,7 @@
 package com.meeting.room.booking;
 
 import java.time.OffsetDateTime;
+import java.util.Collection;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +20,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long>{
 	@Query("""
 		    SELECT b FROM Booking b
 		    WHERE b.room.id = :roomId
-		    AND b.status = 'CONFIRMED'
+		    AND b.status IN :statuses
 		    AND (
 		        :startTime < b.endTime
 		        AND :endTime > b.startTime
@@ -28,6 +29,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long>{
 		List<Booking> findConflictingBookings(
 		        @Param("roomId") Long roomId,
 		        @Param("startTime") OffsetDateTime startTime,
-		        @Param("endTime") OffsetDateTime endTime
+		        @Param("endTime") OffsetDateTime endTime,
+		        @Param("statuses") Collection<BookingStatus> statuses
 		);
 }
