@@ -5,12 +5,20 @@ import com.meeting.room.room.MeetingRoom;
 import com.meeting.room.user.User;
 
 import java.time.OffsetDateTime;
+
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "bookings")
+@Table(name = "bookings", indexes = {
+	    @Index(name = "idx_bookings_user", columnList = "user_id"),
+	    @Index(name = "idx_bookings_room", columnList = "room_id"),
+	    @Index(name = "idx_bookings_time", columnList = "start_time, end_time")
+	})
 @Getter
 @Setter
 public class Booking extends BaseEntity {
@@ -30,6 +38,7 @@ public class Booking extends BaseEntity {
 	private OffsetDateTime endTime;
 	
 	@Enumerated(EnumType.STRING)
+	@JdbcTypeCode(SqlTypes.NAMED_ENUM) 
 	@Column(nullable = false)
 	private BookingStatus status;
 	

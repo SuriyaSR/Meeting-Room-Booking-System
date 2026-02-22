@@ -1,11 +1,17 @@
 package com.meeting.room.common;
 
 import java.time.OffsetDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 public abstract class BaseEntity {
@@ -14,20 +20,11 @@ public abstract class BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@CreatedDate
 	@Column(name = "created_at", nullable = false, updatable = false)
 	private OffsetDateTime createdTime;
 	
+	@LastModifiedDate
 	@Column(name = "updated_at")
-	private OffsetDateTime updatedTime;
-	
-	@PrePersist
-	protected void onCreate() {
-		this.createdTime = OffsetDateTime.now();
-	}
-	
-	@PreUpdate
-	protected void onUpdate() {
-		this.updatedTime = OffsetDateTime.now();
-	}
-	
+	private OffsetDateTime updatedTime;	
 }
